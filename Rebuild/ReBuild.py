@@ -3,8 +3,8 @@ import os,re
 from PIL import Image, ImageTk
 
 index = 1
-w_box = 1200  # 期望图像显示的大小（窗口大小）
-h_box = 1200
+w_box = 500  # 期望图像显示的大小（窗口大小）
+h_box = 500
 flash_flag =10
 def show_pic():
     global index
@@ -37,6 +37,8 @@ def resize( w_box, h_box, pil_image): #参数是：要适应的窗口宽、高�
     f1 = 1.0*w_box/w
     f2 = 1.0*h_box/h
     factor = min([f1, f2])
+    factor = int(factor*100)/100
+    print(factor)
     width = int(w*factor)
     height = int(h*factor)
     return pil_image.resize((width, height), Image.ANTIALIAS)
@@ -55,14 +57,20 @@ def wh_update(event):
     global w_box
     global h_box
     global flash_flag
-    flash_flag -= 1
+    flash_flag -= 2
     w_box = event.width
     h_box = event.height
+    # w_box = int(event.width/100.0)*100
+    # h_box = int(event.height/100.0)*100
+
+    print("w is " + str(w_box))
+    print("h is " + str(h_box))
     if flash_flag==0:
         show_pic()
         flash_flag=10
 
 if __name__ == "__main__":
+
     root = Tk()
     # 初始化名字
     root.title('nHentai终端')
